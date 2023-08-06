@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: rgb(156, 157, 148);
+    }
+    .outer-cont {
+        margin-top: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        width: 380px;
+        height: 440px;
+        background-color: rgb(104, 111, 111);
+        border-radius: 7px;
+        padding: 20px;
+    }
+
+    .solution input {
+        margin-top: 8px;
+        width: 370px;
+        height: 110px;
+        background-color: rgb(146, 155, 155);
+        border-radius: 5px;
+    }
+
+    input {
+        font-size: 30px;
+        font-family: 'Times New Roman', Times, serif;
+        text-align: right;
+    }
+
+
+    button {
+        width: 90px;
+        height: 40px;
+        font-weight: 600;
+        font-size: 25px;
+        font-family: 'Times New Roman', Times, serif;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        background-color: rgb(31, 36, 36);
+        color: rgb(165, 173, 180);
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 12px;
+    }
+    #main{
+        background-color: rgb(102, 54, 54);
+    }
+</style>
+
+<body>
+    <div class="outer-cont">
+        <div class="container">
+            <div class="solution">
+                <input type="text">
+                <div class="Answer"></div>
+            </div>
+            <div class="row">
+                <button class="btn" id="main">CE</button>
+                <button class="btn">(</button>
+                <button class="btn">)</button>
+                <button class="btn" id="main">CUT</button>
+            </div>
+            <div class="row">
+                <button class="btn">X!</button>
+                <button class="btn">√</button>
+                <button class="btn">%</button>
+                <button class="btn">/</button>
+            </div>
+            <div class="row">
+                <button class="btn">7</button>
+                <button class="btn">8</button>
+                <button class="btn">9</button>
+                <button class="btn">*</button>
+            </div>
+            <div class="row">
+                <button class="btn">4</button>
+                <button class="btn">5</button>
+                <button class="btn">6</button>
+                <button class="btn">-</button>
+            </div>
+            <div class="row">
+                <button class="btn">1</button>
+                <button class="btn">2</button>
+                <button class="btn">3</button>
+                <button class="btn">+</button>
+            </div>
+            <div class="row">
+                <button class="btn">.</button>
+                <button class="btn">0</button>
+                <button class="btn">+/-</button>
+                <button class="btn" id="main">=</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Get the input element
+        const input = document.querySelector("input");
+
+        // Function to update the input value
+        function updateInput(value) {
+            input.value += value;
+        }
+
+        // Function to delete the last character
+        function deleteLastCharacter() {
+            input.value = input.value.slice(0, -1);
+        }
+
+        // Function to toggle positive/negative value
+        function toggleSign() {
+            input.value = parseFloat(input.value) * -1;
+        }
+
+        // Function to calculate the factorial of a number
+        function factorial() {
+            const num = parseFloat(input.value);
+            if (Number.isInteger(num) && num >= 0) {
+                let result = 1;
+                for (let i = 2; i <= num; i++) {
+                    result *= i;
+                }
+                input.value = result;
+            } else {
+                input.value = "Error";
+            }
+        }
+
+        // Function to calculate the square root of a number
+        function squareroot() {
+            const num = parseFloat(input.value);
+            if (num >= 0) {
+                input.value = Math.sqrt(num);
+            } else {
+                input.value = "Error";
+            }
+        }
+        // Function to evaluate the expression
+        function evaluate() {
+            try {
+                const result = eval(input.value);
+                input.value = result;
+                document.getElementsByClassName("answer").textContent = "Answer: " + result;
+            } catch (error) {
+                input.value = "Error";
+                document.getElementsByClassName("answer").textContent = "";
+            }
+        }
+
+        // Function to clear the input
+        function clearInput() {
+            input.value = "";
+        }
+
+        // Add click event listeners to all buttons
+        const buttons = document.querySelectorAll(".btn");
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                const value = this.textContent;
+                if (value === "=") {
+                    evaluate();
+                } else if (value === "CE") {
+                    clearInput();
+                } else if (value === "CUT") {
+                    deleteLastCharacter();
+                } else if (value === "+/-") {
+                    toggleSign();
+                }
+                else if (value === "√") {
+                    squareroot();
+                }else if (value === "X!") {
+                    factorial();
+                } else {
+                    updateInput(value);
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
